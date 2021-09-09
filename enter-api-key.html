@@ -1,0 +1,73 @@
+<html lang="en" dir="ltr">
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/custom.css">
+        <link rel="stylesheet" href="font/google-fonts">
+         <link rel="stylesheet" href="font/fontAwesome/css/all.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+
+        <script src="js/jquery-3.4.1.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+        
+    </head>
+    
+ <body>
+     <nav>
+    <div class="menu">
+      
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="edit-contact.html">Edit</a></li>
+        <li><a href="add-contact.html">Add</a></li>
+        <li><a href="enter-api-key.html">Login</a></li>
+       
+      </ul>
+    </div>
+  </nav>
+     
+    <br>
+    <br>
+    <br>
+    <br>
+        
+     <div>Please enter a valid API key.</div>
+        <form>
+            
+            <input type="email" id="apiKey" name="apiKey"/>
+            <button id="submitApiKey">Submit</button>
+        </form>
+
+        <script>
+            
+            let rootPath = "https://mysite.itvarsity.org/api/ContactBook/";
+            document.getElementById("submitApiKey").addEventListener('click', setApiKey);
+
+            function setApiKey(e){
+                e.preventDefault();
+
+                apiKey = document.getElementById("apiKey").value;
+                fetch(rootPath + "controller/api-key/?apiKey=" + apiKey)
+                        .then(function (response) {
+                            return response.text();
+                        })
+                
+                        .then(function (data) {
+
+                            if (data == "1") {
+                                localStorage.setItem("apiKey", apiKey);
+                                window.open("index.html", "_self");
+                            } else {
+                                alert(data + "Invalid API key entered!");
+                            }
+                        })
+            }
+            
+        </script>
+    </body>
+    
+</html>
